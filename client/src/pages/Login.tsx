@@ -274,17 +274,6 @@ export function Login() {
               </button>
             </form>
 
-            {(screen === 'login' || screen === 'register') && (
-              <div className="mt-5 pt-5 border-t border-slate-100 dark:border-dark-700 text-center">
-                <p className="text-xs text-slate-400 dark:text-slate-500 mb-2">Want to explore first?</p>
-                <button
-                  onClick={() => { setForm({ name: '', email: 'demo@example.com', password: 'password123', code: '', newPassword: '' }); setScreen('login'); }}
-                  className="text-sm font-semibold text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 transition-colors"
-                >
-                  Use demo account →
-                </button>
-              </div>
-            )}
           </div>
         </div>
       </div>
