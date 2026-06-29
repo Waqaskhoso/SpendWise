@@ -7,7 +7,12 @@ import db from '../database/db';
 import { generateToken } from '../middleware/auth';
 
 const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
-const resend = new Resend(process.env.RESEND_API_KEY);
+
+function getResend() {
+  const key = process.env.RESEND_API_KEY;
+  if (!key) throw new Error('RESEND_API_KEY is not configured');
+  return new Resend(key);
+}
 
 function formatUser(row: any) {
   return {
@@ -172,7 +177,7 @@ export async function forgotPassword(req: Request, res: Response): Promise<void>
       .run(tokenId, user.id, code, expiresAt);
 
     // Send email
-    await resend.emails.send({
+    await getResend().emails.send({
       from: 'SpendWise <onboarding@resend.dev>',
       to: email,
       subject: 'Your SpendWise Password Reset Code',
