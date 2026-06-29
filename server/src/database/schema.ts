@@ -6,10 +6,22 @@ export function createSchema(): void {
       id TEXT PRIMARY KEY,
       email TEXT UNIQUE NOT NULL,
       name TEXT NOT NULL,
-      password TEXT NOT NULL,
+      password TEXT,
+      google_id TEXT UNIQUE,
+      avatar TEXT,
       currency TEXT NOT NULL DEFAULT 'USD',
       theme TEXT NOT NULL DEFAULT 'light',
       created_at TEXT NOT NULL DEFAULT (datetime('now'))
+    );
+
+    CREATE TABLE IF NOT EXISTS password_reset_tokens (
+      id TEXT PRIMARY KEY,
+      user_id TEXT NOT NULL,
+      token TEXT NOT NULL,
+      expires_at TEXT NOT NULL,
+      used INTEGER NOT NULL DEFAULT 0,
+      created_at TEXT NOT NULL DEFAULT (datetime('now')),
+      FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
     );
 
     CREATE TABLE IF NOT EXISTS transactions (
@@ -62,6 +74,12 @@ export function createSchema(): void {
 
     CREATE INDEX IF NOT EXISTS idx_goals_user_id ON goals(user_id);
   `);
+
+  // Add new columns to existing users table if they don't exist (migration)
+  try { db.exec(`ALTER TABLE users ADD COLUMN google_id TEXT`); } catch {}
+  try { db.exec(`ALTER TABLE users ADD COLUMN avatar TEXT`); } catch {}
+  try { db.exec(`ALTER TABLE users ADD COLUMN password TEXT`); } catch {}
+  try { db.exec(`ALTER TABLE users ADD COLUMN google_id TEXT UNIQUE`); } catch {}
 
   console.log('Database schema created/verified');
 }
