@@ -1,7 +1,8 @@
 import axios from 'axios';
 import { useAuthStore } from '../store/useAuthStore';
 
-const baseURL = import.meta.env.PROD
+// In production (served from same server), use relative URL
+const baseURL = (typeof window !== 'undefined' && window.location.port !== '5173')
   ? '/api'
   : 'http://localhost:3001/api';
 

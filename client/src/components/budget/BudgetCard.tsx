@@ -41,7 +41,7 @@ export function BudgetCard({ budget, currency, onEdit, onDelete }: BudgetCardPro
           {(isWarning || isOver) && (
             <AlertTriangle
               className={clsx('h-4 w-4', isOver ? 'text-red-500' : 'text-yellow-500')}
-              title={isOver ? 'Over budget!' : 'Near budget limit'}
+              aria-label={isOver ? 'Over budget!' : 'Near budget limit'}
             />
           )}
           <button

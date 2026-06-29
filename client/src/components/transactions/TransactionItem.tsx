@@ -33,7 +33,7 @@ export function TransactionItem({ transaction, currency, onEdit, onDelete }: Tra
             {transaction.title}
           </p>
           {transaction.isRecurring && (
-            <Repeat className="h-3.5 w-3.5 flex-shrink-0 text-indigo-400" title="Recurring" />
+            <Repeat className="h-3.5 w-3.5 flex-shrink-0 text-indigo-400" aria-label="Recurring" />
           )}
         </div>
         <p className="text-xs text-slate-400">
